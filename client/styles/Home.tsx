@@ -71,6 +71,9 @@ export const Menu = styled.div<MenuProps>`
   z-index: 10;
   transition: transform 0.2s ease;
   transform: ${({ open }) => (open ? "translateY(0)" : "translateY(-100%)")};
+  @media (min-width: ${BREAKPOINTS.sm}) {
+    display: none;
+  } ;
 `;
 
 export const BurgerContainer = styled.div`
