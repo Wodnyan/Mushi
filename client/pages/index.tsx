@@ -6,19 +6,39 @@ import {
   SubHeader,
   HeroText,
   ButtonGroup,
+  BurgerContainer,
+  LoginLinkContainer,
+  Menu,
 } from "../styles/Home";
 import Button from "../styles/Button";
 import NextLink from "next/link";
+import { Burger } from "../styles/Burger";
+import { useState } from "react";
 
 export default function Home() {
+  const [showMenu, setShowMenu] = useState(true);
   return (
     <Container>
       <Nav>
         <Logo>Mushi</Logo>
-        <NextLink href="/account/login">
-          <Button as="a">Login</Button>
-        </NextLink>
+        <LoginLinkContainer>
+          <NextLink href="/account/login">
+            <Button as="a">Login</Button>
+          </NextLink>
+        </LoginLinkContainer>
+        <BurgerContainer>
+          <Burger onClick={() => setShowMenu((prev) => !prev)} open={showMenu}>
+            <div />
+            <div />
+            <div />
+          </Burger>
+        </BurgerContainer>
       </Nav>
+      <Menu open={showMenu}>
+        <NextLink href="/account/login">
+          <Button block as="a">Login</Button>
+        </NextLink>
+      </Menu>
       <HeroText>
         <CallToAction>Get Started With Mushi!</CallToAction>
         <SubHeader>Report bugs with ease.</SubHeader>
