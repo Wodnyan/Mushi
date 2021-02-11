@@ -1,17 +1,24 @@
-import { GraphQLSchema, GraphQLObjectType, GraphQLString } from "graphql";
+import { GraphQLSchema, GraphQLObjectType } from "graphql";
+import { userQueries } from "./queries/users";
+import { userMutations } from "./mutations/users";
+
+const rootQueryType = new GraphQLObjectType({
+  name: "RootQueryType",
+  fields: {
+    ...userQueries,
+  },
+});
+
+const rootMutationType = new GraphQLObjectType({
+  name: "RootMutationType",
+  fields: {
+    ...userMutations,
+  },
+});
 
 const rootSchema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: "RootQueryType",
-    fields: {
-      hello: {
-        type: GraphQLString,
-        resolve() {
-          return "hello world";
-        },
-      },
-    },
-  }),
+  query: rootQueryType,
+  mutation: rootMutationType,
 });
 
 export default rootSchema;
