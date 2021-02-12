@@ -1,7 +1,9 @@
 import { GraphQLString, GraphQLNonNull, GraphQLFieldConfig } from "graphql";
-import prisma from "../../db";
 import { UserType } from "../types/users";
-import { encryptPassword } from "../../lib/utils/password-encryption";
+//import { encryptPassword } from "../../lib/utils/password-encryption";
+import UserController from "../../controllers/UserController";
+
+const user = new UserController();
 
 export const addUser: GraphQLFieldConfig<any, any> = {
   type: UserType,
@@ -11,14 +13,7 @@ export const addUser: GraphQLFieldConfig<any, any> = {
     email: { type: new GraphQLNonNull(GraphQLString) },
   },
   resolve: async (_, { username, password, email }) => {
-    const hashed = await encryptPassword(password);
-    const newUser = await prisma.user.create({
-      data: {
-        email,
-        username,
-        password: hashed,
-      },
-    });
+    const newUser = await user.signUp({ username, password, email });
     return newUser;
   },
 };
