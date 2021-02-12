@@ -1,7 +1,7 @@
 import { GraphQLString, GraphQLNonNull, GraphQLFieldConfig } from "graphql";
 import prisma from "../../db";
 import { UserType } from "../types/users";
-import { encryptPassword } from "../../lib/password-encryption";
+import { encryptPassword } from "../../lib/utils/password-encryption";
 
 export const addUser: GraphQLFieldConfig<any, any> = {
   type: UserType,
