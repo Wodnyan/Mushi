@@ -5,6 +5,7 @@ import helmet from "helmet";
 import { notFoundHandler, errorHandler } from "./middlewares/error_handlers";
 import { graphqlHTTP } from "express-graphql";
 import schema from "./graphql/";
+import "./db";
 
 dotenv.config();
 
