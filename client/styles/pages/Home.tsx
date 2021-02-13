@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { COLORS } from "../constants/style/colors";
-import { BREAKPOINTS } from "../constants/style/breakpoints";
+import { COLORS } from "../../constants/style/colors";
+import { BREAKPOINTS } from "../../constants/style/breakpoints";
 
 interface MenuProps {
   open?: boolean;

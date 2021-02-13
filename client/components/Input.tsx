@@ -1,15 +1,19 @@
 import * as S from "../styles/Forms";
 import styled from "styled-components";
+import { ChangeEvent } from "react";
 
 interface Props {
-  iconLeft?: string;
-  iconRight?: string;
+  iconLeft?: React.ReactNode;
+  iconRight?: React.ReactNode;
   [x: string]: any;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
 }
 
 const Container = styled.div`
   position: relative;
   display: flex;
+  align-items: center;
   padding: 0.5rem 0.3rem;
   font-size: 1rem;
   outline: 0;
@@ -35,12 +39,18 @@ const Container = styled.div`
   }
 `;
 
-const Input: React.FC<Props> = ({ iconLeft, iconRight, ...rest }) => {
+const Input: React.FC<Props> = ({
+  iconLeft,
+  iconRight,
+  value,
+  onChange,
+  ...rest
+}) => {
   return (
     <Container>
-      {iconLeft && <S.InputIcon>What</S.InputIcon>}
-      <S.Input {...rest} />
-      {iconRight && <S.InputIcon>What</S.InputIcon>}
+      {iconLeft && <S.InputIcon tabIndex={-1}>{iconLeft}</S.InputIcon>}
+      <S.Input onChange={onChange} value={value} {...rest} />
+      {iconRight && <S.InputIcon>{iconRight}</S.InputIcon>}
     </Container>
   );
 };

@@ -9,7 +9,7 @@ import {
   BurgerContainer,
   LoginLinkContainer,
   Menu,
-} from "../styles/Home";
+} from "../styles/pages/Home";
 import Button from "../styles/Button";
 import NextLink from "next/link";
 import { Burger } from "../styles/Burger";
