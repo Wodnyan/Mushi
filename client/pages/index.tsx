@@ -36,7 +36,9 @@ export default function Home() {
       </Nav>
       <Menu open={showMenu}>
         <NextLink href="/account/login">
-          <Button block as="a">Login</Button>
+          <Button block as="a">
+            Login
+          </Button>
         </NextLink>
       </Menu>
       <HeroText>
