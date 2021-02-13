@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const InputIcon = styled.button``;
+export const InputIcon = styled.button`
+  background: none;
+  outline: none;
+  border: none;
+`;
 
 export const Label = styled.label``;
 
@@ -20,8 +24,8 @@ export const Input = styled.input`
 `;
 
 export const FormControl = styled.div`
-  padding: 1rem;
   position: relative;
+  margin-bottom: 1rem;
   ${Label} {
     display: inline-block;
     margin-bottom: 0.5rem;
