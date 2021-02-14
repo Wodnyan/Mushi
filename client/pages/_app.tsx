@@ -6,6 +6,7 @@ import { GRAPHQL_API_ENDPOINT } from "../constants/urls";
 const client = new ApolloClient({
   uri: GRAPHQL_API_ENDPOINT,
   cache: new InMemoryCache(),
+  credentials: "include",
 });
 
 function MyApp({ Component, pageProps }) {

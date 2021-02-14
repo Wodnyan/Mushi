@@ -5,6 +5,9 @@ import PasswordInput from "../../components/PasswordInput";
 import Input from "../../components/Input";
 import { FiMail, FiUser } from "react-icons/fi";
 import { Form } from "../../styles/pages/AccountPages";
+import { useMutation } from "@apollo/client";
+import { SIGN_UP } from "../../graphql/mutations/auth";
+import { useRouter } from "next/router";
 
 interface UserInfo {
   username: string;
@@ -13,15 +16,28 @@ interface UserInfo {
 }
 
 export default function Create() {
+  const router = useRouter();
+  const [signUp] = useMutation(SIGN_UP);
+
   const [userInfo, setUserInfo] = useState<UserInfo>({
     username: "",
     email: "",
     password: "",
   });
-  const handleSignUp = (e: FormEvent<HTMLFormElement>) => {
+
+  const handleSignUp = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(userInfo);
+    const {
+      data: {
+        addUser: { accessToken },
+      },
+    } = await signUp({
+      variables: userInfo,
+    });
+    localStorage.setItem("access_token", accessToken);
+    router.push("/");
   };
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setUserInfo((prev) => ({
@@ -29,6 +45,7 @@ export default function Create() {
       [id]: value,
     }));
   };
+
   return (
     <Form onSubmit={handleSignUp}>
       <FormControl>

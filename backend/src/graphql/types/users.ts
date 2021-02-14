@@ -17,5 +17,6 @@ export const UserType = new GraphQLObjectType({
     avatar: { type: GraphQLString },
     isAdmin: { type: GraphQLBoolean },
     createdAt: { type: GraphQLString },
+    accessToken: { type: GraphQLString },
   },
 });

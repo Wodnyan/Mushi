@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { encryptPassword } from "../lib/utils/password-encryption";
+import { createAccessToken } from "../lib/utils/jwt";
 import prisma from "../db";
 
 interface SignUpParams {
@@ -35,7 +36,11 @@ class UserController {
         createdAt: true,
       },
     });
-    return newUser;
+    const accessToken = await createAccessToken(newUser.id);
+    return {
+      ...newUser,
+      accessToken,
+    };
   }
 
   private async isEmailUnique(email: string) {
