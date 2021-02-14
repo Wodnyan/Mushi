@@ -1,10 +1,18 @@
 import { PrismaClient } from "@prisma/client";
-import { encryptPassword } from "../lib/utils/password-encryption";
+import {
+  encryptPassword,
+  decryptPassword,
+} from "../lib/utils/password-encryption";
 import { createAccessToken } from "../lib/utils/jwt";
 import prisma from "../db";
 
 interface SignUpParams {
   username: string;
+  email: string;
+  password: string;
+}
+
+interface LoginParams {
   email: string;
   password: string;
 }
@@ -39,6 +47,26 @@ class UserController {
     const accessToken = await createAccessToken(newUser.id);
     return {
       ...newUser,
+      accessToken,
+    };
+  }
+
+  async login({ email, password }: LoginParams) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+    if (!user) {
+      throw new Error("Email isn't in use");
+    }
+    const correctPassword = await decryptPassword(password, user.password!);
+    if (!correctPassword) {
+      throw new Error("Incorrect password");
+    }
+    const accessToken = await createAccessToken(user.id);
+    return {
+      ...user,
       accessToken,
     };
   }

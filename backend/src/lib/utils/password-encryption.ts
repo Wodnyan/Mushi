@@ -7,4 +7,7 @@ export const encryptPassword = async (password: string) => {
   return encryptedPassword;
 };
 
-export const decryptPassword = async () => {};
+export const decryptPassword = async (plainText: string, encrypted: string) => {
+  const decryptedPassword = await bcrypt.compare(plainText, encrypted);
+  return decryptedPassword;
+};
