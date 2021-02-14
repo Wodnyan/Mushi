@@ -5,6 +5,7 @@ import helmet from "helmet";
 import { notFoundHandler, errorHandler } from "./middlewares/error_handlers";
 import { graphqlHTTP } from "express-graphql";
 import schema from "./graphql/";
+import cors from "cors";
 import "./db";
 
 dotenv.config();
@@ -15,7 +16,15 @@ const PORT = process.env.PORT || 5050;
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(helmet());
-app.use("/graphql", graphqlHTTP({ schema, graphiql: true }));
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
+app.use("/graphql", (req, res) =>
+  graphqlHTTP({ schema, graphiql: true, context: { req, res } })(req, res)
+);
 app.use(notFoundHandler);
 app.use(errorHandler);
 
