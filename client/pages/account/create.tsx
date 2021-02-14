@@ -29,7 +29,7 @@ export default function Create() {
     e.preventDefault();
     const {
       data: {
-        addUser: { accessToken },
+        signUp: { accessToken },
       },
     } = await signUp({
       variables: userInfo,
