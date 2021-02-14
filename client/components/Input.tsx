@@ -48,9 +48,13 @@ const Input: React.FC<Props> = ({
 }) => {
   return (
     <Container>
-      {iconLeft && <S.InputIcon tabIndex={-1}>{iconLeft}</S.InputIcon>}
+      {iconLeft && (
+        <S.InputIcon type="button" tabIndex={-1}>
+          {iconLeft}
+        </S.InputIcon>
+      )}
       <S.Input onChange={onChange} value={value} {...rest} />
-      {iconRight && <S.InputIcon>{iconRight}</S.InputIcon>}
+      {iconRight && <S.InputIcon type="button">{iconRight}</S.InputIcon>}
     </Container>
   );
 };
