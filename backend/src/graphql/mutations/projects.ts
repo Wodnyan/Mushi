@@ -16,8 +16,8 @@ const createProject: GraphQLFieldConfig<any, any> = {
     name: { type: new GraphQLNonNull(GraphQLString) },
     icon: { type: GraphQLInt },
   },
-  resolve: (_, { ownerId, name, icon }) => {
-    const newPost = project.create({ ownerId, name, icon });
+  resolve: async (_, { ownerId, name, icon }) => {
+    const newPost = await project.create({ ownerId, name, icon });
     return newPost;
   },
 };
