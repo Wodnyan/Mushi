@@ -23,6 +23,23 @@ class UserController {
     this.prisma = prisma;
   }
 
+  async getOne(id: number) {
+    const user = this.prisma.user.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        email: true,
+        avatar: true,
+        isAdmin: true,
+        username: true,
+        createdAt: true,
+      },
+    });
+    return user;
+  }
+
   async signUp({ username, email, password }: SignUpParams) {
     const uniqueEmail = await this.isEmailUnique(email);
     if (!uniqueEmail) {
