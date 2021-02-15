@@ -1,12 +1,14 @@
 import { GraphQLSchema, GraphQLObjectType } from "graphql";
 import { userQueries } from "./queries/users";
+import { projectQueries } from "./queries/projects";
 import { userMutations } from "./mutations/users";
-import { postMutations } from "./mutations/projects";
+import { projectMutations } from "./mutations/projects";
 
 const rootQueryType = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
     ...userQueries,
+    ...projectQueries,
   },
 });
 
@@ -14,7 +16,7 @@ const rootMutationType = new GraphQLObjectType({
   name: "RootMutationType",
   fields: {
     ...userMutations,
-    ...postMutations,
+    ...projectMutations,
   },
 });
 

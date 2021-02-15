@@ -22,6 +22,6 @@ const createProject: GraphQLFieldConfig<any, any> = {
   },
 };
 
-export const postMutations = {
+export const projectMutations = {
   createProject,
 };
