@@ -38,6 +38,15 @@ class BugController {
     });
     return newBug;
   }
+
+  async getAll() {
+    return await this.prisma.bug.findMany({
+      include: {
+        author: true,
+        project: true,
+      },
+    });
+  }
 }
 
 export default BugController;
