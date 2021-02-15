@@ -18,7 +18,7 @@ interface LoginParams {
 }
 
 class UserController {
-  prisma: PrismaClient;
+  private prisma: PrismaClient;
   constructor() {
     this.prisma = prisma;
   }

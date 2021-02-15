@@ -8,7 +8,7 @@ interface CreateParams {
 }
 
 class ProjectController {
-  prisma: PrismaClient;
+  private prisma: PrismaClient;
   constructor() {
     this.prisma = prisma;
   }
