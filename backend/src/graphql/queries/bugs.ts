@@ -1,4 +1,9 @@
-import { GraphQLFieldConfig, GraphQLList } from "graphql";
+import {
+  GraphQLFieldConfig,
+  GraphQLInt,
+  GraphQLList,
+  GraphQLNonNull,
+} from "graphql";
 import BugController from "../../controllers/BugController";
 import { BugsType } from "../types/bugs";
 
@@ -11,4 +16,14 @@ const bugs: GraphQLFieldConfig<any, any> = {
   },
 };
 
-export const bugsQueries = { bugs };
+const bug: GraphQLFieldConfig<any, any> = {
+  type: BugsType,
+  args: {
+    bugId: { type: new GraphQLNonNull(GraphQLInt) },
+  },
+  resolve: async (_, { bugId }) => {
+    return await bugsController.getOne(bugId);
+  },
+};
+
+export const bugsQueries = { bugs, bug };

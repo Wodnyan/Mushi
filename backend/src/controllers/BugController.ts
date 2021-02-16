@@ -39,8 +39,20 @@ class BugController {
     return newBug;
   }
 
-  async getAll() {
+  public async getAll() {
     return await this.prisma.bug.findMany({
+      include: {
+        author: true,
+        project: true,
+      },
+    });
+  }
+
+  public async getOne(id: number) {
+    return await this.prisma.bug.findUnique({
+      where: {
+        id,
+      },
       include: {
         author: true,
         project: true,
