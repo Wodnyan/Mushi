@@ -4,6 +4,7 @@ import prisma from "../db";
 interface CreateParams {
   ownerId: number;
   name: string;
+  description: string;
   icon?: string;
 }
 
@@ -30,11 +31,12 @@ class ProjectController {
     });
   }
 
-  public async create({ ownerId, name, icon }: CreateParams) {
+  public async create({ ownerId, name, icon, description }: CreateParams) {
     const newProject = await this.prisma.project.create({
       data: {
         name,
         icon,
+        description,
         owner: {
           connect: {
             id: ownerId,

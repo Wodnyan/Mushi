@@ -14,10 +14,11 @@ const createProject: GraphQLFieldConfig<any, any> = {
   args: {
     ownerId: { type: new GraphQLNonNull(GraphQLInt) },
     name: { type: new GraphQLNonNull(GraphQLString) },
+    description: { type: new GraphQLNonNull(GraphQLString) },
     icon: { type: GraphQLInt },
   },
-  resolve: async (_, { ownerId, name, icon }) => {
-    const newPost = await project.create({ ownerId, name, icon });
+  resolve: async (_, { ownerId, name, icon, description }) => {
+    const newPost = await project.create({ ownerId, name, icon, description });
     return newPost;
   },
 };
