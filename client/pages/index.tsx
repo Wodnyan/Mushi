@@ -50,9 +50,9 @@ export default function Home() {
               Create an account
             </Button>
           </NextLink>
-          <NextLink href="/boards">
+          <NextLink href="/projects">
             <Button as="a" block>
-              Search for boards
+              Search for projects
             </Button>
           </NextLink>
         </ButtonGroup>
