@@ -6,6 +6,7 @@ import {
 } from "graphql";
 import { ProjectType } from "../types/projects";
 import ProjectController from "../../controllers/ProjectController";
+import { Request } from "express";
 
 const project = new ProjectController();
 
@@ -17,8 +18,15 @@ const createProject: GraphQLFieldConfig<any, any> = {
     description: { type: new GraphQLNonNull(GraphQLString) },
     icon: { type: GraphQLInt },
   },
-  resolve: async (_, { ownerId, name, icon, description }) => {
-    const newPost = await project.create({ ownerId, name, icon, description });
+  resolve: async (
+    _,
+    { ownerId, name, icon, description },
+    { req }: { req: Request }
+  ) => {
+    const newPost = await project.create(
+      { ownerId, name, icon, description },
+      req.user
+    );
     return newPost;
   },
 };
