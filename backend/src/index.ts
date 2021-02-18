@@ -6,6 +6,7 @@ import { notFoundHandler, errorHandler } from "./middlewares/error_handlers";
 import { graphqlHTTP } from "express-graphql";
 import schema from "./graphql/";
 import cors from "cors";
+import { authenticate } from "./middlewares/authenticate";
 import "./db";
 
 dotenv.config();
@@ -22,6 +23,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(authenticate);
 app.use("/graphql", (req, res) =>
   graphqlHTTP({ schema, graphiql: true, context: { req, res } })(req, res)
 );
