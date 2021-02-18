@@ -1,9 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 import prisma from "../db";
+import { RequestUser } from "../types/user";
 
 interface CreateParams {
   ownerId: number;
   name: string;
+  description: string;
   icon?: string;
 }
 
@@ -30,11 +32,18 @@ class ProjectController {
     });
   }
 
-  public async create({ ownerId, name, icon }: CreateParams) {
+  public async create(
+    { ownerId, name, icon, description }: CreateParams,
+    user: RequestUser
+  ) {
+    if (!user || ownerId !== user.id) {
+      throw new Error("Unathorized");
+    }
     const newProject = await this.prisma.project.create({
       data: {
         name,
         icon,
+        description,
         owner: {
           connect: {
             id: ownerId,

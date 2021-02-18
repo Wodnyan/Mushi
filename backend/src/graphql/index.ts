@@ -7,6 +7,7 @@ import { bugsQueries } from "./queries/bugs";
 import { userMutations } from "./mutations/users";
 import { projectMutations } from "./mutations/projects";
 import { bugsMutations } from "./mutations/bugs";
+import { accessTokenMutations } from "./mutations/access-token";
 
 const rootQueryType = new GraphQLObjectType({
   name: "RootQueryType",
@@ -23,6 +24,7 @@ const rootMutationType = new GraphQLObjectType({
     ...userMutations,
     ...projectMutations,
     ...bugsMutations,
+    ...accessTokenMutations,
   },
 });
 

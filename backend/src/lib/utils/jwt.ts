@@ -3,6 +3,17 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+export const verifyAccessToken = (
+  token: string
+): Promise<{ userId: number }> => {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!, (err, data: any) => {
+      if (err) reject(err);
+      resolve(data);
+    });
+  });
+};
+
 export const createAccessToken = (userId: number) => {
   return new Promise((resolve, reject) => {
     jwt.sign(

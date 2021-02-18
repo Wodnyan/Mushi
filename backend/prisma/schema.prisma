@@ -23,13 +23,14 @@ model User {
 }
 
 model Project {
-  id        Int      @id @default(autoincrement())
-  name      String   @unique
-  icon      String?
-  owner     User     @relation(fields: [ownerId], references: [id])
-  ownerId   Int
-  createdAt DateTime @default(now())
-  bugs      Bug[]
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  description String
+  icon        String?
+  owner       User     @relation(fields: [ownerId], references: [id])
+  ownerId     Int
+  createdAt   DateTime @default(now())
+  bugs        Bug[]
 }
 
 model Bug {

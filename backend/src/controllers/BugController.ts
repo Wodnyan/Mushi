@@ -8,6 +8,10 @@ interface CreateBugParams {
   title: string;
 }
 
+interface GetAllOptions {
+  projectId?: number;
+}
+
 class BugController {
   private prisma: PrismaClient;
   constructor() {
@@ -39,8 +43,11 @@ class BugController {
     return newBug;
   }
 
-  public async getAll() {
+  public async getAll(options?: GetAllOptions) {
     return await this.prisma.bug.findMany({
+      where: {
+        projectId: options?.projectId,
+      },
       include: {
         author: true,
         project: true,
