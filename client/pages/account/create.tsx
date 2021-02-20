@@ -1,13 +1,11 @@
 import { Label, FormControl } from "../../styles/Forms";
 import { Button } from "../../styles/Button";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import PasswordInput from "../../components/PasswordInput";
 import Input from "../../components/Input";
 import { FiMail, FiUser } from "react-icons/fi";
 import { Form } from "../../styles/pages/AccountPages";
-import { useMutation } from "@apollo/client";
-import { SIGN_UP } from "../../graphql/mutations/auth";
-import { useRouter } from "next/router";
+import { useSignUp } from "../../graphql/mutations/auth";
 
 interface UserInfo {
   username: string;
@@ -16,27 +14,12 @@ interface UserInfo {
 }
 
 export default function Create() {
-  const router = useRouter();
-  const [signUp] = useMutation(SIGN_UP);
-
   const [userInfo, setUserInfo] = useState<UserInfo>({
     username: "",
     email: "",
     password: "",
   });
-
-  const handleSignUp = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const {
-      data: {
-        signUp: { accessToken },
-      },
-    } = await signUp({
-      variables: userInfo,
-    });
-    localStorage.setItem("access_token", accessToken);
-    router.push("/");
-  };
+  const { handleSignUp } = useSignUp(userInfo);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
