@@ -19,6 +19,7 @@ class ProjectController {
     const allProjects = await this.prisma.project.findMany({
       include: {
         owner: true,
+        bugs: true,
       },
     });
     return allProjects;
