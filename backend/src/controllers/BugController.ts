@@ -50,7 +50,6 @@ class BugController {
       },
       include: {
         author: true,
-        project: true,
       },
     });
   }
@@ -62,7 +61,6 @@ class BugController {
       },
       include: {
         author: true,
-        project: true,
       },
     });
   }
