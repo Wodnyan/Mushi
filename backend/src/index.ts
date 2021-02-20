@@ -7,6 +7,7 @@ import { graphqlHTTP } from "express-graphql";
 import schema from "./graphql/";
 import cors from "cors";
 import { authenticate } from "./middlewares/authenticate";
+import cookieParser from "cookie-parser";
 import "./db";
 
 dotenv.config();
@@ -15,6 +16,7 @@ const app = express();
 const PORT = process.env.PORT || 5050;
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(morgan("dev"));
 app.use(helmet());
 app.use(
