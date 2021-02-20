@@ -1,12 +1,32 @@
 import { GlobalStyle } from "../styles/globals";
 import Head from "next/head";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import {
+  ApolloClient,
+  createHttpLink,
+  InMemoryCache,
+  ApolloProvider,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 import { GRAPHQL_API_ENDPOINT } from "../constants/urls";
 
-const client = new ApolloClient({
+const httpLink = createHttpLink({
   uri: GRAPHQL_API_ENDPOINT,
-  cache: new InMemoryCache(),
   credentials: "include",
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem("access_token");
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
 });
 
 function MyApp({ Component, pageProps }) {
