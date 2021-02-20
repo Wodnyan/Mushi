@@ -6,7 +6,7 @@ import { MdBugReport } from "react-icons/md";
 interface ProjectCardProps {
   name: string;
   description: string;
-  numberOfLikes: number;
+  numberOfBugs: number;
 }
 
 const StyledProjectCard = styled(S.Card)`
@@ -42,7 +42,7 @@ const BottomRow = styled.section`
 const ProjectCard: React.FC<ProjectCardProps> = ({
   description,
   name,
-  numberOfLikes,
+  numberOfBugs,
 }) => {
   return (
     <StyledProjectCard>
@@ -51,7 +51,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       <BottomRow>
         <NumberOfBugs>
           <MdBugReport size={20} />
-          {numberOfLikes}
+          {numberOfBugs}
         </NumberOfBugs>
         <Button>See Bugs</Button>
       </BottomRow>
