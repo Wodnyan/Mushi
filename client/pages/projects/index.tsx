@@ -25,7 +25,7 @@ const Projects = ({ projects }) => {
               <ProjectCard
                 name={name}
                 description={description}
-                numberOfLikes={i}
+                numberOfBugs={i}
                 key={i}
               />
             ))}
