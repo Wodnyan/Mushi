@@ -22,6 +22,9 @@ export const ProjectType = new GraphQLObjectType({
     icon: {
       type: GraphQLString,
     },
+    description: {
+      type: GraphQLString,
+    },
     owner: {
       type: UserType,
       resolve: async (parent) => {
