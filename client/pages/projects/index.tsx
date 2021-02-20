@@ -5,7 +5,7 @@ import SearchForm from "../../components/SearchForm";
 import { Button } from "../../styles/Button";
 import NextLink from "next/link";
 
-const Projects = () => {
+const Projects = ({ projects }) => {
   return (
     <>
       <Head>
@@ -21,10 +21,10 @@ const Projects = () => {
         </NextLink>
         <S.ProjectListContainer>
           <S.ProjectList>
-            {Array.from(Array(500).keys()).map((_, i) => (
+            {projects.map(({ name, description }, i: number) => (
               <ProjectCard
-                name="foo"
-                description="this is a description"
+                name={name}
+                description={description}
                 numberOfLikes={i}
                 key={i}
               />
@@ -35,4 +35,28 @@ const Projects = () => {
     </>
   );
 };
+
+export async function getStaticProps() {
+  const response = await fetch("http://localhost:5050/graphql", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: `
+    query {
+      projects {
+        id
+        name
+        description
+      }
+    }`,
+    }),
+  });
+  const {
+    data: { projects },
+  } = await response.json();
+  return {
+    props: { projects }, // will be passed to the page component as props
+  };
+}
+
 export default Projects;
