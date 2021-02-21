@@ -3,6 +3,7 @@ import { GraphQLSchema, GraphQLObjectType } from "graphql";
 import { userQueries } from "./queries/users";
 import { projectQueries } from "./queries/projects";
 import { bugsQueries } from "./queries/bugs";
+import { commentsQueries } from "./queries/comments";
 
 import { userMutations } from "./mutations/users";
 import { projectMutations } from "./mutations/projects";
@@ -16,6 +17,7 @@ const rootQueryType = new GraphQLObjectType({
     ...userQueries,
     ...projectQueries,
     ...bugsQueries,
+    ...commentsQueries,
   },
 });
 

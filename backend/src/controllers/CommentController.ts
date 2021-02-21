@@ -13,7 +13,19 @@ class CommentController {
     this.prisma = prisma;
   }
 
-  async insertComment({ userId, bugId, comment }: InsertCommentData) {
+  async getAll() {
+    return await this.prisma.comment.findMany();
+  }
+
+  async getOne(id: number) {
+    return await this.prisma.comment.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
+  async insert({ userId, bugId, comment }: InsertCommentData) {
     const newComment = await this.prisma.comment.create({
       data: {
         comment,

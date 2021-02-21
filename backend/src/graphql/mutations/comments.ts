@@ -17,7 +17,7 @@ const createComment: GraphQLFieldConfig<any, any> = {
     comment: { type: new GraphQLNonNull(GraphQLString) },
   },
   resolve: async (_, { userId, bugId, comment }) => {
-    const newComment = await commentController.insertComment({
+    const newComment = await commentController.insert({
       userId,
       bugId,
       comment,
