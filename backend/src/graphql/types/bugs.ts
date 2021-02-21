@@ -1,14 +1,18 @@
 import {
   GraphQLBoolean,
   GraphQLInt,
+  GraphQLList,
   GraphQLNonNull,
   GraphQLObjectType,
   GraphQLString,
 } from "graphql";
+import CommentController from "../../controllers/CommentController";
 import UserController from "../../controllers/UserController";
+import { CommentType } from "./comments";
 import { UserType } from "./users";
 
 const user = new UserController();
+const commentController = new CommentController();
 
 export const BugsType = new GraphQLObjectType({
   name: "Bug",
@@ -32,6 +36,14 @@ export const BugsType = new GraphQLObjectType({
       type: UserType,
       resolve: async (parent) => {
         return await user.getOne(parent.authorId);
+      },
+    },
+    comments: {
+      type: GraphQLList(CommentType),
+      resolve: async (parent) => {
+        return commentController.getAll({
+          bugId: parent.id,
+        });
       },
     },
   },

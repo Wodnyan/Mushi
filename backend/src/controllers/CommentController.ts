@@ -7,14 +7,22 @@ interface InsertCommentData {
   comment: string;
 }
 
+interface GetAllOptions {
+  bugId?: number;
+}
+
 class CommentController {
   prisma!: PrismaClient;
   constructor() {
     this.prisma = prisma;
   }
 
-  async getAll() {
-    return await this.prisma.comment.findMany();
+  async getAll(options?: GetAllOptions) {
+    return await this.prisma.comment.findMany({
+      where: {
+        id: options?.bugId,
+      },
+    });
   }
 
   async getOne(id: number) {
