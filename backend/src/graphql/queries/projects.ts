@@ -1,8 +1,8 @@
 import {
-  GraphQLNonNull,
   GraphQLFieldConfig,
   GraphQLInt,
   GraphQLList,
+  GraphQLString,
 } from "graphql";
 import ProjectController from "../../controllers/ProjectController";
 import { ProjectType } from "../types/projects";
@@ -20,10 +20,14 @@ const projects: GraphQLFieldConfig<any, any> = {
 const project: GraphQLFieldConfig<any, any> = {
   type: ProjectType,
   args: {
-    projectId: { type: new GraphQLNonNull(GraphQLInt) },
+    projectId: { type: GraphQLInt },
+    projectName: { type: GraphQLString },
   },
-  resolve: async (_, { projectId }) => {
-    return await projectController.getOne(projectId);
+  resolve: async (_, { projectId, projectName }) => {
+    return await projectController.getOne({
+      id: projectId,
+      name: projectName,
+    });
   },
 };
 
