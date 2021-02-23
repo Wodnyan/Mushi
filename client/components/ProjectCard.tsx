@@ -26,7 +26,9 @@ const StyledProjectCard = styled(S.Card)`
 
 const ProjectName = styled.h1``;
 
-const ProjectDescription = styled.p``;
+const ProjectDescription = styled.p`
+  overflow: hidden;
+`;
 
 const NumberOfBugs = styled.div`
   display: flex;

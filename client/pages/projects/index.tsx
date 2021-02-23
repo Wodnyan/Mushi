@@ -16,17 +16,17 @@ const Projects = ({ projects }) => {
         <SearchForm />
         <NextLink href="/projects/create">
           <Button block as="a">
-            Login
+            Create new project
           </Button>
         </NextLink>
         <S.ProjectListContainer>
           <S.ProjectList>
-            {projects.map(({ name, description }, i: number) => (
+            {projects.map(({ id, name, description, bugs }) => (
               <ProjectCard
                 name={name}
                 description={description}
-                numberOfBugs={i}
-                key={i}
+                numberOfBugs={bugs.length}
+                key={id}
               />
             ))}
           </S.ProjectList>
@@ -47,6 +47,9 @@ export async function getStaticProps() {
         id
         name
         description
+        bugs {
+          id
+        }
       }
     }`,
     }),

@@ -23,7 +23,24 @@ class UserController {
     this.prisma = prisma;
   }
 
-  async getOne(id: number) {
+  async getAll() {
+    const users = await this.prisma.user.findMany({
+      select: {
+        id: true,
+        email: true,
+        avatar: true,
+        isAdmin: true,
+        username: true,
+        createdAt: true,
+      },
+    });
+    return users;
+  }
+
+  async getOne(id?: number) {
+    if (!id) {
+      throw new Error("Unathorized");
+    }
     const user = this.prisma.user.findUnique({
       where: {
         id,

@@ -9,6 +9,11 @@ interface CreateParams {
   icon?: string;
 }
 
+interface GetOneOptions {
+  id?: number;
+  name?: string;
+}
+
 class ProjectController {
   private prisma: PrismaClient;
   constructor() {
@@ -25,10 +30,11 @@ class ProjectController {
     return allProjects;
   }
 
-  public async getOne(id: number) {
+  public async getOne(options: GetOneOptions) {
     return await this.prisma.project.findUnique({
       where: {
-        id,
+        id: options.id,
+        name: options.name,
       },
     });
   }

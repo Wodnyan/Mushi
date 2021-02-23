@@ -31,8 +31,10 @@ export const ProjectType = new GraphQLObjectType({
     },
     bugs: {
       type: GraphQLList(BugsType),
-      resolve: async () => {
-        const bugs = await bugsController.getAll();
+      resolve: async (parent) => {
+        const bugs = await bugsController.getAll({
+          projectId: parent.id,
+        });
         return bugs;
       },
     },
