@@ -1,6 +1,6 @@
 import { useQuery, gql } from "@apollo/client";
 
-const getAllProjects = gql`
+export const GET_ALL_PROJECTS = gql`
   query GetAllProjecst {
     projects {
       id
@@ -10,7 +10,7 @@ const getAllProjects = gql`
 `;
 
 export const useFetchAllProjects = () => {
-  const { data, loading, error } = useQuery(getAllProjects);
+  const { data, loading, error } = useQuery(GET_ALL_PROJECTS);
   return {
     data,
     loading,

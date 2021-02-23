@@ -57,7 +57,6 @@ export async function getStaticProps() {
   const {
     data: { projects },
   } = await response.json();
-  console.log(projects.forEach((project) => console.log(project.bugs)));
   return {
     props: { projects }, // will be passed to the page component as props
   };
