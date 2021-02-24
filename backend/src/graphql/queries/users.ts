@@ -16,7 +16,7 @@ export const users: GraphQLFieldConfig<any, any> = {
 export const user: GraphQLFieldConfig<any, any> = {
   type: UserType,
   resolve: async (_, _1, { req }) => {
-    const user = userController.getOne(req.user?.id);
+    const user = await userController.getOne(req.user?.id);
     return user;
   },
 };
