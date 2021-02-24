@@ -1,9 +1,10 @@
 import { Label, FormControl } from "../../styles/Forms";
 import { Button } from "../../styles/Button";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import Input from "../../components/Input";
 import { Form } from "../../styles/pages/AccountPages";
 import { useCreateProject } from "../../graphql/mutations/projects";
+import { useAuth } from "../../graphql/queries/auth";
 
 interface Project {
   name: string;
@@ -12,12 +13,22 @@ interface Project {
 }
 
 export default function CreateProjectPage() {
+  const { user, loading } = useAuth();
   const [project, setProject] = useState<Project>({
     name: "",
     description: "",
-    ownerId: 1,
+    ownerId: null,
   });
   const { handleSubmit } = useCreateProject(project);
+
+  useEffect(() => {
+    if (user) {
+      setProject((prev) => ({
+        ...prev,
+        ownerId: user.id,
+      }));
+    }
+  }, [user]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -42,7 +53,7 @@ export default function CreateProjectPage() {
           value={project.description || ""}
         />
       </FormControl>
-      <Button>Create a project</Button>
+      <Button disabled={loading}>Create a project</Button>
     </Form>
   );
 }
