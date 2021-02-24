@@ -17,7 +17,6 @@ export const signUp: GraphQLFieldConfig<any, any> = {
     const refreshToken = await createRefreshToken(newUser.id);
     res.cookie("refresh_token", refreshToken, {
       httpOnly: true,
-      secure: true,
     });
     return newUser;
   },
@@ -34,7 +33,6 @@ export const login: GraphQLFieldConfig<any, any> = {
     const refreshToken = await createRefreshToken(loggedInUser.id);
     res.cookie("refresh_token", refreshToken, {
       httpOnly: true,
-      secure: true,
     });
     return loggedInUser;
   },

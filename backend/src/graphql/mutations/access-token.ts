@@ -16,17 +16,41 @@ const AccessTokenType = new GraphQLObjectType({
 
 export const createAccessToken: GraphQLFieldConfig<any, any> = {
   type: AccessTokenType,
-  resolve: async (_, _1, context: { req: Request; res: Response }) => {
-    const { user } = context.req;
-    const { res } = context;
-    if (!user) {
-      res.status(401);
-      throw new Error("Provide a valid auth token");
-    }
-    const accessToken = await jwt.createAccessToken(user.id);
-    return {
-      accessToken,
-    };
+  args: {
+    accessToken: { type: new GraphQLNonNull(GraphQLString) },
+  },
+  resolve: async (_, args, context: { req: Request; res: Response }) => {
+    return jwt
+      .verifyAccessToken(args.accessToken)
+      .then(() => {
+        return {
+          accessToken: args.accessToken,
+        };
+      })
+      .catch(async (error) => {
+        if (error.name === "JsonWebTokenError") {
+          throw new Error("Unathorized");
+        } else if (error.name === "TokenExpiredError") {
+          const { refresh_token: refreshToken } = context.req.cookies;
+          try {
+            const { userId } = await jwt.verifyRefreshToken(refreshToken);
+            const newAccessToken = await jwt.createAccessToken(userId);
+            return {
+              accessToken: newAccessToken,
+            };
+          } catch (error) {
+            if (
+              error.name === "JsonWebTokenError" ||
+              error.name === "TokenExpiredError"
+            ) {
+              throw new Error("Unathorized");
+            }
+            throw error;
+          }
+        } else {
+          throw error;
+        }
+      });
   },
 };
 
