@@ -6,7 +6,8 @@ interface Props {
   iconLeft?: React.ReactNode;
   iconRight?: React.ReactNode;
   [x: string]: any;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  multiline?: boolean;
   value?: string;
 }
 
@@ -43,6 +44,7 @@ const Input: React.FC<Props> = ({
   iconLeft,
   iconRight,
   value,
+  multiline,
   onChange,
   ...rest
 }) => {
@@ -53,7 +55,12 @@ const Input: React.FC<Props> = ({
           {iconLeft}
         </S.InputIcon>
       )}
-      <S.Input onChange={onChange} value={value} {...rest} />
+      <S.Input
+        as={multiline ? "textarea" : "input"}
+        onChange={onChange}
+        value={value}
+        {...rest}
+      />
       {iconRight && <S.InputIcon type="button">{iconRight}</S.InputIcon>}
     </Container>
   );

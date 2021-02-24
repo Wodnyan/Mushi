@@ -38,6 +38,7 @@ export default function CreateProjectPage() {
         <Input
           onChange={handleChange}
           id="description"
+          multiline
           value={project.description || ""}
         />
       </FormControl>
