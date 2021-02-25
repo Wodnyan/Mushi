@@ -2,6 +2,7 @@ import * as S from "../styles/Card";
 import { Button } from "../styles/Button";
 import styled from "styled-components";
 import { MdBugReport } from "react-icons/md";
+import NextLink from "next/link";
 
 interface ProjectCardProps {
   name: string;
@@ -55,7 +56,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           <MdBugReport size={20} />
           {numberOfBugs}
         </NumberOfBugs>
-        <Button>See Bugs</Button>
+        <NextLink href={`/projects/${name}`}>
+          <Button as="a">Open Project</Button>
+        </NextLink>
       </BottomRow>
     </StyledProjectCard>
   );

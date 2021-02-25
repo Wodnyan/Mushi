@@ -15,19 +15,13 @@ const TEMP = gql`
   }
 `;
 
-interface User {
-  id: number;
-}
-
-export const useAuth = (
-  redirectUrl: string = "http://localhost:3000/account/create"
-) => {
+export const useAuth = (redirectUrl?: string) => {
   const router = useRouter();
   const { data, error, loading } = useQuery(TEMP);
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    if (error && !loading) {
+    if (error && !loading && redirectUrl) {
       router.push(redirectUrl);
     } else {
       setUser(data?.user);
@@ -37,5 +31,6 @@ export const useAuth = (
   return {
     user,
     loading,
+    error,
   };
 };

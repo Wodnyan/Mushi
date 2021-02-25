@@ -5,6 +5,7 @@ import Input from "../../components/Input";
 import { Form } from "../../styles/pages/AccountPages";
 import { useCreateProject } from "../../graphql/mutations/projects";
 import { useAuth } from "../../graphql/queries/auth";
+import { DEFAULT_UNAUTHORIZED_REDIRECT } from "../../constants/urls";
 
 interface Project {
   name: string;
@@ -13,7 +14,7 @@ interface Project {
 }
 
 export default function CreateProjectPage() {
-  const { user, loading } = useAuth();
+  const { user, loading } = useAuth(DEFAULT_UNAUTHORIZED_REDIRECT);
   const [project, setProject] = useState<Project>({
     name: "",
     description: "",
