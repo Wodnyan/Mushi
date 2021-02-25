@@ -4,8 +4,10 @@ import Head from "next/head";
 import SearchForm from "../../components/SearchForm";
 import { Button } from "../../styles/Button";
 import NextLink from "next/link";
+import { useAuth } from "../../graphql/queries/auth";
 
 const Projects = ({ projects }) => {
+  const { user } = useAuth();
   return (
     <>
       <Head>
@@ -14,11 +16,13 @@ const Projects = ({ projects }) => {
       <S.Container>
         <h1>Search Component</h1>
         <SearchForm />
-        <NextLink href="/projects/create">
-          <Button block as="a">
-            Create new project
-          </Button>
-        </NextLink>
+        {user && (
+          <NextLink href="/projects/create">
+            <Button block as="a">
+              Create new project
+            </Button>
+          </NextLink>
+        )}
         <S.ProjectListContainer>
           <S.ProjectList>
             {projects.map(({ id, name, description, bugs }) => (
