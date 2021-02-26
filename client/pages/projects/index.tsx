@@ -36,6 +36,13 @@ const Projects = ({ projects }) => {
           </S.ProjectList>
         </S.ProjectListContainer>
       </S.Container>
+      <style jsx global>
+        {`
+          body {
+            background: url("/fingerprint");
+          }
+        `}
+      </style>
     </>
   );
 };

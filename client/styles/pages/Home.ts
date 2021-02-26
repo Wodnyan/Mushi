@@ -59,7 +59,7 @@ export const Container = styled.main`
   align-items: center;
   color: #fff;
   background-color: ${COLORS.codGray};
-  background: url("fingerprint.svg");
+  background: url("/fingerprint.svg");
 `;
 
 export const Menu = styled.div<MenuProps>`

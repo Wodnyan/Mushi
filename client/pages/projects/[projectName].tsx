@@ -1,5 +1,31 @@
+import BugCard from "../../components/BugCard";
+import ProjectDescription from "../../components/ProjectDescription";
+import * as S from "../../styles/pages/Project";
+
 const Project = ({ project }) => {
-  return <h1>{JSON.stringify(project, null, 2)}</h1>;
+  return (
+    <S.Container>
+      <S.ContentWrapper>
+        <S.BugGrid>
+          {project.bugs.map((bug: any) => (
+            <BugCard
+              key={bug.id}
+              description={bug.description}
+              title={bug.title}
+              createdAt={bug.cretedAt}
+              isDuplicate={bug.isDuplicate}
+            />
+          ))}
+        </S.BugGrid>
+        <ProjectDescription project={project} owner={project.owner} />
+      </S.ContentWrapper>
+      <style jsx global>{`
+        body {
+          background: url("/fingerprint.svg");
+        }
+      `}</style>
+    </S.Container>
+  );
 };
 
 export async function getStaticProps({ params }) {
@@ -19,11 +45,20 @@ export async function getStaticProps({ params }) {
           email
           avatar
         }
+        bugs {
+          id
+          title
+          description
+          createdAt
+          isDuplicate
+        }
       }
     }`,
     }),
   });
-  const { data: project } = await response.json();
+  const {
+    data: { project },
+  } = await response.json();
 
   return {
     props: {
