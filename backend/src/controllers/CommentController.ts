@@ -1,8 +1,9 @@
 import { PrismaClient } from "@prisma/client";
+import { RequestUser } from "../types/user";
 import prisma from "../db";
 
 interface InsertCommentData {
-  userId: number;
+  authorId: number;
   bugId: number;
   comment: string;
 }
@@ -33,7 +34,13 @@ class CommentController {
     });
   }
 
-  async insert({ userId, bugId, comment }: InsertCommentData) {
+  async insert(
+    { bugId, comment, authorId }: InsertCommentData,
+    user: RequestUser
+  ) {
+    if (!user || authorId !== user.id) {
+      throw new Error("Unathorized");
+    }
     const newComment = await this.prisma.comment.create({
       data: {
         comment,
@@ -44,12 +51,9 @@ class CommentController {
         },
         author: {
           connect: {
-            id: userId,
+            id: authorId,
           },
         },
-      },
-      include: {
-        author: true,
       },
     });
     return newComment;
