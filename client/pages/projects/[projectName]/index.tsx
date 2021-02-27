@@ -1,5 +1,7 @@
+import { fetchAllProjectNames } from "../../../static-paths/projects";
+
 const Project = ({ project }) => {
-  return <h1>{JSON.stringify(project, null, 2)}</h1>;
+  return <h1>This will be an admin page</h1>;
 };
 
 export async function getStaticProps({ params }) {
@@ -19,11 +21,20 @@ export async function getStaticProps({ params }) {
           email
           avatar
         }
+        bugs {
+          id
+          title
+          description
+          createdAt
+          isDuplicate
+        }
       }
     }`,
     }),
   });
-  const { data: project } = await response.json();
+  const {
+    data: { project },
+  } = await response.json();
 
   return {
     props: {
@@ -33,22 +44,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  // TODO: Clean this up
-  const response = await fetch("http://localhost:5050/graphql", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      query: `
-    query {
-      projects {
-        name
-      }
-    }`,
-    }),
-  });
-  const {
-    data: { projects },
-  } = await response.json();
+  const projects = await fetchAllProjectNames();
   const paths = projects.map((project: any) => ({
     params: {
       projectName: project.name,
