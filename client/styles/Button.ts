@@ -30,7 +30,8 @@ function setBackgroundHoverColor(props: ButtonProps) {
 //function setSize(props: ButtonProps) {}
 
 export const Button = styled.button<ButtonProps>`
-  display: ${(props) => props.block && "block"};
+  //display: ${(props) => props.block && "block"};
+  display: ${(props) => (props.block ? "block" : "inline-block")};
   padding: 0.5rem;
   border: none;
   width: ${(props) => props.block && "100%"};

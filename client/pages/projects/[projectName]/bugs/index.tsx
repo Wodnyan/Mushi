@@ -1,6 +1,7 @@
-import BugCard from "../../components/BugCard";
-import ProjectDescription from "../../components/ProjectDescription";
-import * as S from "../../styles/pages/Project";
+import BugCard from "../../../../components/BugCard";
+import ProjectDescription from "../../../../components/ProjectDescription";
+import { fetchAllProjectNames } from "../../../../static-paths/projects";
+import * as S from "../../../../styles/pages/Project";
 
 const Project = ({ project }) => {
   return (
@@ -10,10 +11,12 @@ const Project = ({ project }) => {
           {project.bugs.map((bug: any) => (
             <BugCard
               key={bug.id}
-              description={bug.description}
-              title={bug.title}
-              createdAt={bug.cretedAt}
-              isDuplicate={bug.isDuplicate}
+              //description={bug.description}
+              //title={bug.title}
+              //createdAt={bug.cretedAt}
+              //isDuplicate={bug.isDuplicate}
+              bug={bug}
+              projectName={project.name}
             />
           ))}
         </S.BugGrid>
@@ -68,22 +71,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  // TODO: Clean this up
-  const response = await fetch("http://localhost:5050/graphql", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      query: `
-    query {
-      projects {
-        name
-      }
-    }`,
-    }),
-  });
-  const {
-    data: { projects },
-  } = await response.json();
+  const projects = await fetchAllProjectNames();
   const paths = projects.map((project: any) => ({
     params: {
       projectName: project.name,
