@@ -41,6 +41,7 @@ export const Button = styled.button<ButtonProps>`
   cursor: pointer;
   font-size: 1rem;
   text-align: center;
+  text-decoration: none;
   &:hover {
     background: ${setBackgroundHoverColor};
   }
