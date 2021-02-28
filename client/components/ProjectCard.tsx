@@ -56,7 +56,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           <MdBugReport size={20} />
           {numberOfBugs}
         </NumberOfBugs>
-        <NextLink href={`/projects/${name}/bugs`}>
+        <NextLink href={`/projects/${name}/bugs`} passHref>
           <Button as="a">Open Project</Button>
         </NextLink>
       </BottomRow>

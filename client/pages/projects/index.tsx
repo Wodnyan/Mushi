@@ -17,7 +17,7 @@ const Projects = ({ projects }) => {
         <h1>Search Component</h1>
         <SearchForm />
         {user && (
-          <NextLink href="/projects/create">
+          <NextLink href="/projects/create" passHref>
             <Button block as="a">
               Create new project
             </Button>
