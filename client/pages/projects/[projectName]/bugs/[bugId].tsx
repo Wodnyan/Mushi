@@ -10,13 +10,14 @@ const Bug = ({ comments }) => {
 };
 
 export async function getStaticProps({ params }) {
+  console.log(params);
   const response = await fetch("http://localhost:5050/graphql", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       query: `
         query {
-          comments {
+          comments(bugId: ${params.bugId}) {
             id
             comment
             author {

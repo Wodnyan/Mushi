@@ -11,8 +11,11 @@ const commentControllers = new CommentController();
 
 const comments: GraphQLFieldConfig<any, any> = {
   type: GraphQLList(CommentType),
-  resolve: async () => {
-    return await commentControllers.getAll();
+  args: {
+    bugId: { type: GraphQLInt },
+  },
+  resolve: async (_, { bugId }) => {
+    return await commentControllers.getAll({ bugId });
   },
 };
 

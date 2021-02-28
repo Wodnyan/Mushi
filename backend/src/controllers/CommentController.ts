@@ -21,7 +21,7 @@ class CommentController {
   async getAll(options?: GetAllOptions) {
     return await this.prisma.comment.findMany({
       where: {
-        id: options?.bugId,
+        bugId: options?.bugId,
       },
     });
   }

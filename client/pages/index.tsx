@@ -22,7 +22,7 @@ export default function Home() {
       <Nav>
         <Logo>Mushi</Logo>
         <LoginLinkContainer>
-          <NextLink href="/account/login">
+          <NextLink href="/account/login" passHref>
             <Button as="a">Login</Button>
           </NextLink>
         </LoginLinkContainer>
@@ -35,7 +35,7 @@ export default function Home() {
         </BurgerContainer>
       </Nav>
       <Menu open={showMenu}>
-        <NextLink href="/account/login">
+        <NextLink href="/account/login" passHref>
           <Button block as="a">
             Login
           </Button>
@@ -45,7 +45,7 @@ export default function Home() {
         <CallToAction>Get Started With Mushi!</CallToAction>
         <SubHeader>Report bugs with ease.</SubHeader>
         <ButtonGroup>
-          <NextLink href="/account/create">
+          <NextLink href="/account/create" passHref>
             <Button as="a" style={{ marginRight: "20px" }} block>
               Create an account
             </Button>
